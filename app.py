@@ -179,6 +179,22 @@ def theaters(request, response):
     cnx.close()
 
 
+@application.route("/app/theaters/{id}")
+def get_theater_name(request, response, t_id):
+    cnx = connection.MySQLConnection(**config)
+    cursor = cnx.cursor()
+    query = f"SELECT name FROM Theater WHERE theater_id = '{t_id}'"
+    cursor.execute(query)
+    names = []
+
+    for name in cursor:
+        names.append({"name": name[0]})
+    
+    json_str = json.dumps(names, indent=2, sort_keys=True, default=str)
+    response.text = json_str
+    cnx.close()
+
+
 # Gets all movies
 @application.route("/app/movies")
 def movies(request, response):
