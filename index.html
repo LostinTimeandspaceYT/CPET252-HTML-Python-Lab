@@ -115,11 +115,31 @@
       </nav>
     </div><!-- End Page Title -->
     </section>
+    
+    <div class="row align-items-top"> 
+      <div class="col-lg-3">
+        <div class="card">
+          <img src="https://cdn-icons-png.flaticon.com/512/1066/1066995.png" class="card-img-top" alt="...">
+          <div class="card-img-overlay">
+            <h5 class="card-title">View All Theaters</h5>
+            <p class="card-text"><a href="/theaters" class="btn btn-primary">View Table</a></p>
+          </div>
+        </div><!-- End Card with an image overlay -->
+      </div>
 
-    <!-- PUT MORE STUFF HERE!!! -->
 
+      <div class="col-lg-3">
+        <div class="card">
+          <img src="https://cdn-icons-png.flaticon.com/512/4221/4221419.png" class="card-img-top" alt="..."> 
+          <div class="card-img-overlay">
+            <h5 class="card-title">View All Movies</h5>
+            <p class="card-text"><a href="/movies" class="btn btn-primary">View Table</a></p>
+          </div>
+        </div><!-- End Card with an image overlay -->
+      </div>
+    </div>
 
-
+    
 
 
   </main><!-- End #main -->
@@ -152,6 +172,13 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+  $(document).ready(function()
+  {
+    document.getElementById("active-theater").innerHTML = t_id;
+  
+  }); // end ready
+</script>
 
 </body>
 
