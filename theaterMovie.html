@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<!-- meta is to ensure the page fits on all devices-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+<head>
+
+  <title>Movies DB Application</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/css/style.css" />
+</head> <!-- end of head -->
+
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="/home" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">Movies DB</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="/home">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>View Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="/movies">
+              <i class="bi bi-circle"></i><span>All Movies</span>
+            </a>
+          </li>
+          <li>
+            <a href="/theaters">
+              <i class="bi bi-circle"></i><span>All Theaters</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+    </ul>
+  </aside><!-- End Sidebar-->
+
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/home">Home</a></li>
+          <li class="breadcrumb-item"><a href="/theaters">Theaters</a></li>
+          <li class="breadcrumb-item active" id="active-theater"></li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+<section class="section">
+      <div class="row">
+        <div class="col-lg-6">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Movies for Theater</h5>
+
+              <!-- Default Table -->
+              <table id="theaterMovie-Table" class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Movie Title</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <!-- End Default Table Example -->
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Sales Chart</h5>
+        
+              <!-- Bar Chart -->
+              <canvas id="SalesChart" style="max-height: 400px;"></canvas>
+              <!-- End Bar CHart -->
+        
+            </div>
+          </div>
+        </div>
+      </div>
+</section>
+
+
+
+
+</main> <!-- end of main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body> <!-- end of body -->
+
+<script>
+
+  function remove_movie(remove_button)
+  {
+    var m_id = $(remove_button).closest('tr').prop('id');
+    var t_id = sessionStorage.getItem("theater_id");
+    var table = $('#theaterMovie-Table').DataTable();
+    alert("Are you sure you want to remove " + m_id + " from " + t_id + "?");
+    // get movies
+    $.ajax({
+      statusCode: {
+          404: function(){ alert("Movie not found"); }
+      },
+      async: true,
+      method:"POST",
+      cache: false,
+      url: "/app/theatermovies/" + t_id + "/remove/" + m_id,
+      data: { request:"", t_id, m_id },
+      error: function(jqXHR, textStatus, errorThrown)
+      {
+          alert(errorThrown); 
+      },
+          success: function(data) {
+            console.log(data);
+            get_theater_movies();
+            
+        }
+        }); // end ajax 
+  }  
+  
+  function edit_movie(edit_button)
+  {
+    
+  }
+
+  function build_table(_data)
+  {
+    // destroy old table if it exists 
+    var table = $('#theaterMovie-Table').DataTable();
+    if (table != null)
+    {
+        table.clear().destroy();
+    }
+
+    console.log(_data)
+      $('#theaterMovie-Table').DataTable( {
+          responsive: {responsiveR: true, details: false}, // must hide details, or hidden columns become child rows
+          data: $.parseJSON(_data),
+          rowId: 'm_id',
+          createdRow: function(row, data, index)
+          {
+  
+          },
+          columns: 
+          [
+              {data: "m_title"},
+              {data: "start_date"},
+              {data: "end_date"},
+              { data: null, "bSortable": false,"mRender": function(data, type, full) {
+          return '<div class="btn-group" role="group">'
+                + '<button type="button" class="btn btn-danger" onclick=remove_movie(this)>Remove</button>' +
+                '<button type="button" class="btn btn-warning" onclick=edit_movie(this)>Edit</button>' +
+                '<button type="button" class="btn btn-success">View</button></div>';;}}
+          ]
+      });
+  }
+
+  // https://www.geeksforgeeks.org/create-a-chart-from-json-data-using-fetch-get-request-fetch-api-in-javascript/
+  function build_chart(_data)
+  {
+    var ch = Chart.getChart("SalesChart");
+    if (ch != undefined)
+    {
+      ch.destroy();
+    }
+
+    var labels = [];
+    var values = [];
+    var data = $.parseJSON(_data);
+    var length = Object.keys(data).length;
+
+    for(i =0; i < length; ++i)
+    {
+      var log = "logging: " + i + " " + data[i].m_title + " " + data[i].ticket_sales;
+      console.log(log)
+      labels.push(data[i].m_title);
+      values.push(data[i].ticket_sales);
+    }
+
+    new Chart(document.getElementById("SalesChart"), 
+    {
+      type: 'bar',
+      data:
+      {
+        labels: labels,
+        datasets: 
+        [{
+          label: "Sales (USD)",
+          data: values,
+          backgroundColor: [
+                          'rgba(255, 99, 132, 0.2)',
+                          'rgba(255, 159, 64, 0.2)',
+                          'rgba(255, 205, 86, 0.2)',
+                          'rgba(75, 192, 192, 0.2)',
+                          'rgba(54, 162, 235, 0.2)',
+                          'rgba(153, 102, 255, 0.2)',
+                          'rgba(201, 203, 207, 0.2)'
+                        ],
+          borderColor: [
+                          'rgb(255, 99, 132)',
+                          'rgb(255, 159, 64)',
+                          'rgb(255, 205, 86)',
+                          'rgb(75, 192, 192)',
+                          'rgb(54, 162, 235)',
+                          'rgb(153, 102, 255)',
+                          'rgb(201, 203, 207)'
+                        ],
+          borderWidth: 1
+
+        }]
+
+      },
+      options: 
+      {
+        legend: {display: false},
+        title: 
+        {
+          display: true,
+          text: "Total Ticket Sales"
+        }
+      }
+    });
+  }
+
+  // Used to get theater movies after removing an entry
+  function get_theater_movies()
+  {
+    const t_id = sessionStorage.getItem("theater_id");
+    console.log(t_id);
+    $.ajax({
+          statusCode: {
+              404: function(){ alert("Movies not found"); }
+          },
+          async: true,
+          method:"POST",
+          cache: false,
+          url: "/app/theatermovies/" + t_id,
+          data: { request:"", t_id},
+          error: function(jqXHR, textStatus, errorThrown)
+          {
+              alert(errorThrown);
+          },
+        success: function(data) { build_table(data), build_chart(data) }
+      }); // end ajax
+
+  }
+  
+  $(document).ready(function(){
+    const t_id = sessionStorage.getItem("theater_id")
+    console.log(t_id)
+    // Syntax Provided by: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_win_sessionstorage2
+    document.getElementById("active-theater").innerHTML = t_id;
+
+      $.ajax({
+          statusCode: {
+              404: function(){ alert("Movies not found"); }
+          },
+          async: true,
+          method:"POST",
+          cache: false,
+          url: "/app/theatermovies/" + t_id,
+          data: { request:"", t_id},
+          error: function(jqXHR, textStatus, errorThrown)
+          {
+              alert(errorThrown);
+          },
+        success: function(data) { build_table(data), build_chart(data) }
+      }); // end ajax
+  
+  }); // end ready
+    </script>
